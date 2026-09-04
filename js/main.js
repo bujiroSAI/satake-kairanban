@@ -21,12 +21,9 @@
   var i = today.getDate() % slogans.length;
   document.getElementById('loaderSlogan').innerHTML = slogans[i].replace('\n', '<br>');
   document.getElementById('loaderFact').textContent = facts[i];
-  var seen = localStorage.getItem('satake-loader') === key;
-  if (seen) loader.style.transition = 'none';
   setTimeout(function () {
     loader.classList.add('done');
-    localStorage.setItem('satake-loader', key);
-  }, seen ? 0 : 1000);
+  }, 2400);
 })();
 
 /* ---------- 2. あいさつ・日付・きょうの一言 ---------- */
@@ -35,9 +32,7 @@
   var wd = ['日', '月', '火', '水', '木', '金', '土'];
   document.getElementById('helloDate').textContent =
     (now.getMonth() + 1) + '月' + now.getDate() + '日（' + wd[now.getDay()] + '）';
-  var h = now.getHours();
-  document.getElementById('helloGreet').textContent =
-    h < 5 ? 'こんばんは。' : h < 10 ? 'おはようございます。' : h < 18 ? '午後に雨が上がるよ。' : 'こんばんは。';
+  document.getElementById('helloGreet').textContent = '午後に雨が上がるよ。';
 })();
 
 /* ---------- 3. しめきりカウントダウン ---------- */
