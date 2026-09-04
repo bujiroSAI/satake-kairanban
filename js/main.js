@@ -1,4 +1,5 @@
 /* さたけの回覧板 v2 — モックアップ用（バックエンドなし） */
+var IMGBASE = location.pathname.indexOf('/cards/') !== -1 ? '../assets/img/' : 'assets/img/';
 
 /* ---------- 1. ローディング（1日1回・1秒） ---------- */
 (function () {
@@ -28,11 +29,14 @@
 
 /* ---------- 2. あいさつ・日付・きょうの一言 ---------- */
 (function () {
+  var hd = document.getElementById('helloDate');
+  if (!hd) return;
   var now = new Date();
   var wd = ['日', '月', '火', '水', '木', '金', '土'];
-  document.getElementById('helloDate').textContent =
+  hd.textContent =
     (now.getMonth() + 1) + '月' + now.getDate() + '日（' + wd[now.getDay()] + '）';
   document.getElementById('helloGreet').textContent = '午後に雨が上がるよ。';
+
 })();
 
 /* ---------- 3. しめきりカウントダウン ---------- */
@@ -156,7 +160,7 @@ var MISE = [
     list.innerHTML = cut.map(function (m) {
       var idx = sorted.indexOf(m);
       return '<li><button class="mise-row" type="button" data-i="' + idx + '">' +
-        '<img src="assets/img/face' + m[5] + '.png" alt="">' +
+        '<img src="' + IMGBASE + 'face' + m[5] + '.png" alt="">' +
         '<div><div class="m-name">' + m[0] + '</div><div class="m-cat">' + m[2] + '・定休 ' + m[6] + '</div></div>' +
         '<svg class="m-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>' +
         '</button></li>';
@@ -190,7 +194,7 @@ var MISE = [
   var lastFocus = null;
   function openPop(m) {
     lastFocus = document.activeElement;
-    document.getElementById('popImg').src = 'assets/img/face' + m[5] + '.png';
+    document.getElementById('popImg').src = IMGBASE + 'face' + m[5] + '.png';
     document.getElementById('popName').textContent = m[0];
     document.getElementById('popCat').textContent = m[2] + '　／　定休日 ' + m[6] + '（サンプル）';
     document.getElementById('popDesc').textContent = m[7] || m[2] + 'のお店です。くわしくはお電話でどうぞ。';
@@ -271,7 +275,7 @@ var MISE = [
   function say(text, me) {
     var div = document.createElement('div');
     div.className = 'msg' + (me ? ' me' : '');
-    div.innerHTML = (me ? '' : '<img src="assets/img/owl.png" alt="">') +
+    div.innerHTML = (me ? '' : '<img src="' + IMGBASE + 'owl.png" alt="">') +
       '<div class="bubble">' + text + '</div>';
     log.appendChild(div);
     log.scrollTop = log.scrollHeight;

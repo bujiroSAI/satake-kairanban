@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>さたけの回覧板｜カード版</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+<style>
+/* ============ カード版ホーム（C案・1画面1情報） ============ */
+body { overflow: hidden; }
+.feed-wrap {
+  max-width: 430px; margin: 0 auto; height: 100svh;
+  background: var(--cream); box-shadow: 0 0 60px rgba(70,80,60,.18);
+  position: relative;
+}
+.feed {
+  height: calc(100svh - 84px);
+  overflow-y: auto; scroll-snap-type: y mandatory;
+  padding: 10px 14px 0; scrollbar-width: none;
+}
+.feed::-webkit-scrollbar { display: none; }
+.fcard {
+  height: calc(100svh - 84px - 34px);
+  scroll-snap-align: start; scroll-snap-stop: always;
+  margin-bottom: 14px; border-radius: 26px; overflow: hidden;
+  background: var(--panel); border: 1px solid var(--edge);
+  box-shadow: 0 4px 16px rgba(70,80,60,.1);
+  display: flex; flex-direction: column; position: relative;
+}
+.fcard .fc-photo { flex: 1 1 52%; min-height: 0; position: relative; }
+.fcard .fc-photo img { width: 100%; height: 100%; object-fit: cover; }
+.fcard .fc-photo.contain img { object-fit: contain; background: #fff; }
+.fcard .fc-body { flex: 0 0 auto; padding: 18px 22px 20px; display: flex; flex-direction: column; gap: 8px; }
+.fc-tag { align-self: flex-start; font-size: 12.5px; font-weight: 700; letter-spacing: .08em; color: #FFFDF4; border-radius: 999px; padding: 3px 13px; }
+.fc-tag.t-ad { background: var(--amber-text); }
+.fc-tag.t-sns { background: var(--green); }
+.fc-tag.t-kairan { background: var(--green-ink); }
+.fc-tag.t-dl { background: var(--shu, #C8452C); background: #B93E27; }
+.fcard h2 { font-weight: 900; font-size: clamp(21px, 5.8vw, 25px); line-height: 1.5; color: var(--green-ink); }
+.fcard p { font-size: 15px; color: var(--sub); line-height: 1.8; }
+.fc-meta { font-size: 13px; color: var(--sub); font-weight: 700; }
+.fc-meta b { color: var(--green); }
+.fc-act { display: flex; gap: 10px; margin-top: 8px; flex-wrap: wrap; }
+.fc-act .btn { min-height: 50px; }
+/* 表紙 */
+.fcard.cover { background: var(--sage); border: none; align-items: center; justify-content: center; text-align: center; padding: 30px; }
+.fcard.cover img { width: 120px; height: 120px; border-radius: 50%; margin-bottom: 18px; }
+.fcard.cover .c-date { font-weight: 700; color: var(--green-ink); }
+.fcard.cover h1 { font-weight: 900; font-size: 30px; color: var(--green-ink); line-height: 1.5; }
+.fcard.cover .c-cue { margin-top: 26px; font-size: 13px; color: var(--sub); }
+.fcard.cover .c-cue i { display: block; width: 2px; height: 34px; background: var(--green); margin: 10px auto 0; border-radius: 2px; animation: cue2 1.6s ease-in-out infinite; }
+@keyframes cue2 { 0%,100% { transform: scaleY(.25); transform-origin: top; } 50% { transform: scaleY(1); } }
+/* 締切カード */
+.fcard.dl-card { background: var(--green); border: none; color: #FFFDF4; justify-content: center; padding: 30px; }
+.fcard.dl-card .fc-tag { background: rgba(255,253,244,.2); }
+.fcard.dl-card .big { font-weight: 900; font-size: 96px; line-height: 1.1; color: #FFD9CF; }
+.fcard.dl-card .big small { font-size: 24px; margin-left: 4px; }
+.fcard.dl-card h2 { color: #FFFDF4; }
+.fcard.dl-card p { color: #CFE0D6; }
+.fcard.dl-card .btn { background: #FFFDF4; color: var(--green-ink); }
+/* 終端カード */
+.fcard.end { background: var(--sage); border: none; justify-content: center; text-align: center; padding: 30px; }
+.fcard.end h2 { font-size: 26px; }
+.fcard.end .btn { align-self: center; }
+/* 判子 */
+.stamp-btn { background: var(--panel); }
+@media (prefers-reduced-motion: reduce) { .fcard.cover .c-cue i { animation: none; } }
+</style>
+</head>
+<body>
+<div class="bg-illust" aria-hidden="true"></div>
+<div class="feed-wrap">
+<div class="feed" id="feed">
+
+  <!-- 1. 表紙 -->
+  <section class="fcard cover">
+    <img src="../assets/img/owl.png" alt="ふくろうのマーク">
+    <p class="c-date" id="helloDate">9月4日（金）</p>
+    <h1 id="helloGreet">午後に雨が上がるよ。</h1>
+    <p class="c-cue">上にスワイプすると、今日の佐竹<i></i></p>
+  </section>
+
+  <!-- 2. 告知（チラシ全面） -->
+  <section class="fcard">
+    <div class="fc-photo contain"><img src="../assets/img/ad_flea.jpg" alt="フリーマーケット＆ハロウィンストリート 出店者大募集"></div>
+    <div class="fc-body">
+      <span class="fc-tag t-ad">告知・無料</span>
+      <h2>フリマ＆ハロウィン、出店者大募集</h2>
+      <div class="fc-act"><a class="btn sub" href="../shinsei.html">出店を申し込む</a><a class="btn line" href="../shinsei.html">告知をのせる</a></div>
+    </div>
+  </section>
+
+  <!-- 3. SNS -->
+  <section class="fcard">
+    <div class="fc-photo"><img src="../assets/img/sns_croquette.jpg" alt="揚げたてのコロッケ"></div>
+    <div class="fc-body">
+      <span class="fc-tag t-sns">お店の投稿</span>
+      <p class="fc-meta"><b>30-1</b>・3時間前</p>
+      <h2>秋のさつまいもコロッケ、今日からです。夕方は売り切れごめん🍠</h2>
+    </div>
+  </section>
+
+  <!-- 4. 締切 -->
+  <section class="fcard dl-card" data-due="2026-09-19">
+    <span class="fc-tag">締切・助成金</span>
+    <div class="big"><span>--</span><small>日</small></div>
+    <h2>東京都 商店街チャレンジ戦略支援（二次募集）</h2>
+    <p>9月19日（土）まで。イベント経費の最大2/3を補助。</p>
+    <div class="fc-act"><a class="btn" href="../shinsei.html">相談する</a></div>
+  </section>
+
+  <!-- 5. 回覧 -->
+  <section class="fcard">
+    <div class="fc-photo contain"><img src="../assets/img/ad_banner_contest.jpg" alt="横断幕コンテストのポスター"></div>
+    <div class="fc-body" data-kid="k1" data-base="41">
+      <span class="fc-tag t-kairan">回覧・組合</span>
+      <h2>横断幕コンテスト、応募は9月30日まで</h2>
+      <div class="fc-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count fc-meta"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. SNS -->
+  <section class="fcard">
+    <div class="fc-photo"><img src="../assets/img/sns_coffee.jpg" alt="アイスラテとコーヒー豆"></div>
+    <div class="fc-body">
+      <span class="fc-tag t-sns">お店の投稿</span>
+      <p class="fc-meta"><b>ベースキャンプコーヒー</b>・昨日</p>
+      <h2>新豆エチオピア、焼き上がりました。試飲どうぞ☕</h2>
+    </div>
+  </section>
+
+  <!-- 7. 回覧（工事） -->
+  <section class="fcard">
+    <div class="fc-photo"><img src="../assets/img/photo_album2.jpg" alt="アーケードの通り"></div>
+    <div class="fc-body" data-kid="k3" data-base="45">
+      <span class="fc-tag t-kairan">回覧・工事</span>
+      <h2>9月8日（月）、北側入口で水道管の取替工事</h2>
+      <p>朝9時〜夕方5時。歩く方は通れます。断水はありません。</p>
+      <div class="fc-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count fc-meta"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. SNS（写真展） -->
+  <section class="fcard">
+    <div class="fc-photo"><img src="../assets/img/photo_news.jpg" alt="写真展の会場"></div>
+    <div class="fc-body">
+      <span class="fc-tag t-sns">お店の投稿</span>
+      <p class="fc-meta"><b>しろむじ</b>・9月2日</p>
+      <h2>昭和40年代の佐竹、正直エモいです。写真展はじまりました📷</h2>
+    </div>
+  </section>
+
+  <!-- 9. 回覧（祭り） -->
+  <section class="fcard">
+    <div class="fc-photo"><img src="../assets/img/photo_album1.jpg" alt="よみきかせの会"></div>
+    <div class="fc-body" data-kid="k4" data-base="33">
+      <span class="fc-tag t-kairan">回覧・組合</span>
+      <h2>ふくろう祭り、実行委員会は9月12日（土）19時</h2>
+      <p>出店したいお店はこの日までに。昨年のガラポン抽選会は長い列ができました。</p>
+      <div class="fc-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count fc-meta"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. 締切2 -->
+  <section class="fcard dl-card" data-due="2026-09-30" style="background:var(--green-ink)">
+    <span class="fc-tag">締切・コンテスト</span>
+    <div class="big"><span>--</span><small>日</small></div>
+    <h2>横断幕コンテスト 作品応募</h2>
+    <p>9月30日（水）まで。入賞作はアーケードに1年間。</p>
+    <div class="fc-act"><a class="btn" href="../shinsei.html">応募する</a></div>
+  </section>
+
+  <!-- 11. アルバム -->
+  <section class="fcard">
+    <div class="fc-photo"><img src="../assets/img/photo_album3.jpg" alt="昭和11年の佐竹通り"></div>
+    <div class="fc-body">
+      <span class="fc-tag t-sns">みんなのアルバム</span>
+      <h2>昭和11年の佐竹通り。いまと同じ場所です</h2>
+      <div class="fc-act"><a class="btn sub" href="../album.html">アルバムを見る・コメントする</a></div>
+    </div>
+  </section>
+
+  <!-- 12. 終端 -->
+  <section class="fcard end">
+    <span class="fc-tag t-ad" style="align-self:center">告知・無料</span>
+    <h2>商店街に告知しませんか</h2>
+    <p>お店のお知らせ・イベント・求人。<br>商店街のお店・町会なら、どなたでも無料です。</p>
+    <div class="fc-act" style="justify-content:center"><a class="btn" href="../shinsei.html">告知をのせる</a></div>
+    <p style="margin-top:18px;font-size:12px">カード版デモ（C案）｜<a href="../index.html">一覧版ホームへ</a></p>
+  </section>
+
+</div>
+
+<nav class="tabbar" aria-label="メニュー" style="max-width:430px">
+  <a href="index.html" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7M6 10v10h12V10"/></svg>ホーム</a>
+  <a href="list.html#calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>予定</a>
+  <a href="list.html#mise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 5 5h14l1 5M5 10v9h14v-9M9 19v-5h6v5"/></svg>お店</a>
+  <a href="../album.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4 3 2 4-3 4 3"/></svg>アルバム</a>
+  <a href="list.html#tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>電話</a>
+</nav>
+</div>
+
+<script>
+/* カード版ホーム: 日付・締切・判子（一覧版とlocalStorage共有） */
+(function () {
+  var now = new Date();
+  var wd = ['日', '月', '火', '水', '木', '金', '土'];
+  document.getElementById('helloDate').textContent =
+    (now.getMonth() + 1) + '月' + now.getDate() + '日（' + wd[now.getDay()] + '）';
+
+  var today = new Date(); today.setHours(0, 0, 0, 0);
+  document.querySelectorAll('.fcard[data-due]').forEach(function (el) {
+    var due = new Date(el.getAttribute('data-due') + 'T00:00:00');
+    var days = Math.round((due - today) / 86400000);
+    el.querySelector('.big span').textContent = days >= 0 ? 'あと' + days : '済';
+  });
+
+  var TOTAL = 53;
+  document.querySelectorAll('[data-kid]').forEach(function (card) {
+    var kid = card.getAttribute('data-kid');
+    var base = parseInt(card.getAttribute('data-base'), 10) || 0;
+    var btn = card.querySelector('.stamp-btn');
+    var count = card.querySelector('.k-count');
+    function draw() {
+      var stamped = localStorage.getItem('satake-stamp-' + kid) === '1';
+      btn.classList.toggle('stamped', stamped);
+      btn.querySelector('.s-label').textContent = stamped ? '見ました' : '見ました を押す';
+      count.textContent = TOTAL + '店中 ' + (base + (stamped ? 1 : 0)) + '店が確認';
+    }
+    btn.addEventListener('click', function () {
+      var v = localStorage.getItem('satake-stamp-' + kid) === '1';
+      localStorage.setItem('satake-stamp-' + kid, v ? '0' : '1');
+      draw();
+    });
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
