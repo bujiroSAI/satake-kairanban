@@ -93,9 +93,14 @@ body { font-family:"Noto Sans JP",sans-serif; background:#141711; color:var(--in
 </div>
 
 <script src="_stores.js"></script>
-<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }</script>
-<script type="module">
-import * as THREE from 'three';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+if (typeof THREE === 'undefined') {
+  document.getElementById('hint').textContent = '3Dライブラリの読み込みに失敗しました。通信環境を確認して再読み込みしてください。';
+}
+</script>
+<script>
+(function () {
 
 /* ---------- 基本 ---------- */
 const canvas = document.getElementById('c');
@@ -307,6 +312,7 @@ renderer.setAnimationLoop((t) => {
   posEl.textContent = m + 'm / ' + (LEN + 8) + 'm';
   renderer.render(scene, camera);
 });
+})();
 </script>
 </body>
 </html>
