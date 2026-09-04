@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>さたけの回覧板｜佐竹商店街</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="bg-illust" aria-hidden="true"></div>
+
+<!-- ローディング（1日1回・応援型） -->
+<div id="loader" aria-hidden="true">
+  <img src="assets/img/owl.png" alt="">
+  <p class="l-slogan" id="loaderSlogan">今日も一日、<br>がんばりましょう。</p>
+  <p class="l-sub" id="loaderFact">佐竹商店街は、明治31年から128年。</p>
+</div>
+
+<div class="app">
+
+  <header class="head">
+    <img src="assets/img/owl.png" alt="ふくろうのマーク">
+    <div class="t">さたけの回覧板<small>佐竹商店街　台東区・新御徒町</small></div>
+  </header>
+
+  <!-- あいさつ -->
+  <div class="hello" id="top">
+    <div class="h-day" id="helloDate">9月4日（金）</div>
+    <h1 id="helloGreet">こんにちは。</h1>
+  </div>
+
+  <!-- ヒーロー＝告知面（チラシがそのまま載る） -->
+  <section class="hero-ads" aria-label="告知">
+    <div class="ha-scroll reveal">
+      <a class="ha-card" href="shinsei.html"><span class="ad-chip">告知</span><img src="assets/img/ad_flea.jpg" alt="フリーマーケット＆ハロウィンストリート 10月26日 出店者大募集"></a>
+      <a class="ha-card" href="shinsei.html"><span class="ad-chip">告知</span><img src="assets/img/ad_banner_contest.jpg" alt="第2回 横断幕コンテスト 作品募集"></a>
+      <a class="ha-card ha-empty" href="shinsei.html"><div><b>この枠に、お店のチラシを</b><br>掲載は商店街のお店・町会なら無料<span class="btn sub" style="margin-top:10px">告知をのせる</span></div></a>
+    </div>
+  </section>
+
+  <!-- 今日の3本（SNS連携） -->
+  <section class="news" aria-labelledby="h-news">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5h13v14H6a2 2 0 0 1-2-2z"/><path d="M17 8h3v9a2 2 0 0 1-2 2h-1z"/><path d="M7 9h7M7 12h7M7 15h4"/></svg>
+      <h2 id="h-news">今日の3本</h2>
+    </div>
+    <p class="sec-lead reveal">お店のSNSをつなぐと、投稿が自動でここに流れます。<a href="shinsei.html" style="font-weight:700;color:var(--green)">お店のSNSを登録する →</a></p>
+    <article class="n-item reveal">
+      <img src="assets/img/sns_croquette.jpg" alt="揚げたてのコロッケ">
+      <div><div class="n-meta"><b>30-1</b><time>・3時間前</time></div>
+      <h3>秋のさつまいもコロッケ、今日からです。夕方は売り切れごめん🍠</h3></div>
+    </article>
+    <article class="n-item reveal">
+      <img src="assets/img/sns_coffee.jpg" alt="アイスラテとコーヒー豆">
+      <div><div class="n-meta"><b>ベースキャンプコーヒー</b><time>・昨日</time></div>
+      <h3>新豆エチオピア、焼き上がりました。試飲どうぞ☕</h3></div>
+    </article>
+    <article class="n-item reveal">
+      <img src="assets/img/photo_news.jpg" alt="写真展の会場">
+      <div><div class="n-meta"><b>しろむじ</b><time>・9月2日</time></div>
+      <h3>昭和40年代の佐竹、正直エモいです。写真展はじまりました📷</h3></div>
+    </article>
+  </section>
+
+  <!-- アルバムのティーザー -->
+  <section aria-labelledby="h-album-t">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4 3 2 4-3 4 3"/></svg>
+      <h2 id="h-album-t">みんなのアルバム</h2>
+      <a class="more" href="album.html">すべて見る →</a>
+    </div>
+    <div class="teaser reveal">
+      <img src="assets/img/photo_album1.jpg" alt="">
+      <img src="assets/img/photo_album2.jpg" alt="">
+      <img src="assets/img/photo_album3.jpg" alt="">
+    </div>
+    <a class="btn sub wide reveal" href="album.html">アルバムを見る・コメントする</a>
+  </section>
+
+  <!-- 締切 -->
+  <section aria-labelledby="h-dl">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/></svg>
+      <h2 id="h-dl">締切</h2>
+    </div>
+    <p class="sec-lead reveal">出しそびれると損をするものだけ。横にスライドできます。</p>
+    <div class="deadline-scroll reveal">
+      <div class="dl" data-due="2026-09-19">
+        <span class="d-tag">助成金</span>
+        <div class="d-num"><span>--</span><small>日</small></div>
+        <h3>東京都 商店街チャレンジ戦略支援（二次募集）</h3>
+        <p class="d-date">9月19日（土）まで</p>
+        <a class="btn" href="shinsei.html">相談する</a>
+      </div>
+      <div class="dl alt" data-due="2026-09-30">
+        <span class="d-tag">コンテスト</span>
+        <div class="d-num"><span>--</span><small>日</small></div>
+        <h3>横断幕コンテスト 作品応募</h3>
+        <p class="d-date">9月30日（水）まで</p>
+        <a class="btn" href="shinsei.html">応募する</a>
+      </div>
+      <div class="dl" data-due="2026-10-15">
+        <span class="d-tag">共済</span>
+        <div class="d-num"><span>--</span><small>日</small></div>
+        <h3>商店街共済 年度更新の書類</h3>
+        <p class="d-date">10月15日（木）まで</p>
+        <a class="btn" href="shinsei.html">書類を出す</a>
+      </div>
+    </div>
+    <div class="ad-card reveal">
+      <span class="ad-chip">告知</span>
+      <div class="a-body">
+        <img class="a-face" src="assets/img/face5.png" alt="">
+        <div><h3>班家｜宴会コースの予約はじめました</h3>
+        <p>忘年会はお早めに。4名さまから。（サンプル告知）</p></div>
+      </div>
+      <div class="ad-note"><span>この告知枠は、商店街のお店なら無料</span><a href="shinsei.html">告知をのせる</a></div>
+    </div>
+  </section>
+
+  <!-- 回覧板 -->
+  <section class="kairan" aria-labelledby="h-kairan">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 4v3M15 4v3M8 12h8M8 16h5"/></svg>
+      <h2 id="h-kairan">回覧板</h2>
+    </div>
+    <p class="sec-lead reveal">読んだら「見ました」を押してください。隣の店に回す代わりです。</p>
+
+    <article class="card reveal" data-kid="k1" data-base="41">
+      <div class="k-meta"><time>9月4日（金）</time><span class="chip c-kumiai">組合</span></div>
+      <h3>横断幕コンテスト、応募は9月30日まで</h3>
+      <p>テーマは「佐竹のイメージ・くらし・歴史・未来」。入賞作はアーケードに1年間飾られます。応募用紙は組合事務所にもあります。</p>
+      <div class="k-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count"></span>
+      </div>
+    </article>
+
+    <article class="card reveal" data-kid="k2" data-base="38">
+      <div class="k-meta"><time>9月3日（木）</time><span class="chip c-ku">区から</span></div>
+      <h3>プレミアム付商品券、取扱店を募集中</h3>
+      <p>10月発行分の登録がはじまりました。登録は無料。前回は商店街の28店が参加しています。</p>
+      <div class="k-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count"></span>
+        <a class="btn sub" href="shinsei.html">登録する</a>
+      </div>
+    </article>
+
+    <article class="card reveal" data-kid="k3" data-base="45">
+      <div class="k-meta"><time>9月2日（水）</time><span class="chip c-kouji">工事</span></div>
+      <h3>9月8日（月）、水道管の取替工事</h3>
+      <p>朝9時〜夕方5時、アーケード北側の入口付近。歩く方は通れます。断水はありません。搬入の車は南側からお回りください。</p>
+      <div class="k-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count"></span>
+      </div>
+    </article>
+
+    <article class="card reveal" data-kid="k4" data-base="33">
+      <div class="k-meta"><time>8月29日（土）</time><span class="chip c-kumiai">組合</span></div>
+      <h3>ふくろう祭り、実行委員会は9月12日（土）19時</h3>
+      <p>組合事務所にて。出店したいお店はこの日までにお申し込みください。昨年のガラポン抽選会は長い列ができました。</p>
+      <div class="k-act">
+        <button class="stamp-btn" type="button"><span class="s-circle">印</span><span class="s-label">見ました</span></button>
+        <span class="k-count"></span>
+        <a class="btn sub" href="shinsei.html">出店を申し込む</a>
+      </div>
+    </article>
+
+    <p class="k-past reveal"><a class="btn line" href="#h-kairan">前の回覧板を見る</a></p>
+  </section>
+
+  <!-- お店 -->
+  <section aria-labelledby="h-mise" id="mise">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10 5 5h14l1 5M4 10a2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 5 0 2.5 2.5 0 0 0 5 0M5 10v9h14v-9M9 19v-5h6v5"/></svg>
+      <h2 id="h-mise">お店</h2>
+    </div>
+    <p class="sec-lead reveal">53のお店＋組合事務所。タップすると詳しい案内が出ます。</p>
+    <div class="reveal">
+      <input class="mise-search" id="miseSearch" type="search" placeholder="お店の名前で探す" aria-label="お店の名前で探す">
+      <div class="mise-filter" role="group" aria-label="種類でしぼる">
+        <button class="f-btn" aria-pressed="true" data-cat="all">すべて</button>
+        <button class="f-btn" aria-pressed="false" data-cat="taberu">食べる</button>
+        <button class="f-btn" aria-pressed="false" data-cat="kau">買う</button>
+        <button class="f-btn" aria-pressed="false" data-cat="kurashi">暮らし</button>
+      </div>
+      <div class="mise-closed" id="miseClosed"></div>
+      <p class="mise-count" id="miseCount"></p>
+      <ul class="mise-list" id="miseList"></ul>
+      <div class="mise-more"><button class="btn line" id="miseMore" type="button">すべて見る</button></div>
+    </div>
+  </section>
+
+  <!-- 予定 -->
+  <section aria-labelledby="h-cal" id="calendar">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>
+      <h2 id="h-cal">予定</h2>
+    </div>
+    <div class="cal reveal">
+      <div class="cal-title">2026年 9月</div>
+      <table>
+        <thead><tr><th class="sun">日</th><th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th></tr></thead>
+        <tbody>
+          <tr><td class="sun"></td><td></td><td>1</td><td>2</td><td>3</td><td class="today"><span>4</span></td><td>5</td></tr>
+          <tr><td class="sun">6</td><td>7</td><td>8<i class="dot"></i></td><td>9</td><td>10</td><td>11</td><td>12<i class="dot"></i></td></tr>
+          <tr><td class="sun">13</td><td>14</td><td>15</td><td>16</td><td>17</td><td>18</td><td>19<i class="dot hot"></i></td></tr>
+          <tr><td class="sun">20</td><td>21<i class="dot"></i></td><td>22</td><td>23<i class="dot"></i></td><td>24</td><td>25</td><td>26<i class="dot"></i></td></tr>
+          <tr><td class="sun">27</td><td>28</td><td>29</td><td>30<i class="dot hot"></i></td><td></td><td></td><td></td></tr>
+        </tbody>
+      </table>
+      <ul class="cal-legend">
+        <li><span class="d">8日（月）</span>水道管の取替工事（北側入口）</li>
+        <li><span class="d">12日（土）</span>ふくろう祭り 実行委員会 19時</li>
+        <li class="hot"><span class="d">19日（土）</span>助成金の申請締切</li>
+        <li><span class="d">21日（月）</span>敬老の日</li>
+        <li><span class="d">23日（水）</span>秋分の日</li>
+        <li><span class="d">26日（土）</span>街路清掃当番（C班）</li>
+        <li class="hot"><span class="d">30日（水）</span>横断幕コンテスト締切</li>
+      </ul>
+    </div>
+    <p class="sec-lead reveal" style="margin-top:10px">10月はふくろう祭り。同じ日に町会のフリーマーケットもあります。日どりは実行委員会のあとにお知らせします。</p>
+  </section>
+
+  <!-- 連絡網 -->
+  <section aria-labelledby="h-tel" id="tel">
+    <div class="sec-head reveal">
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>
+      <h2 id="h-tel">連絡網</h2>
+    </div>
+    <p class="sec-lead reveal">困ったときは、ここから。ボタンでそのまま電話がかかります。</p>
+    <ul class="tel-list">
+      <li class="tel-row reveal"><div><div class="t-name">佐竹商店街振興組合 事務所</div><div class="t-note">平日10時〜17時</div></div><a href="tel:0338318926">☏ 電話する</a></li>
+      <li class="tel-row reveal"><div><div class="t-name">アーケード設備の故障</div><div class="t-note">夜間は留守番電話</div></div><a href="tel:0338318926">☏ 電話する</a></li>
+      <li class="tel-row reveal"><div><div class="t-name">台東区役所（代表）</div><div class="t-note">暮らしの手続き全般</div></div><a href="tel:0352461111">☏ 電話する</a></li>
+      <li class="tel-row reveal"><div><div class="t-name">上野警察署</div><div class="t-note">急ぎは110番</div></div><a href="tel:0338470110">☏ 電話する</a></li>
+      <li class="tel-row reveal"><div><div class="t-name">水道局 台東営業所</div><div class="t-note">番号はデモ用サンプル</div></div><a href="tel:0338350000">☏ 電話する</a></li>
+    </ul>
+  </section>
+
+  <!-- フッター -->
+  <footer class="foot">
+    <div class="f-free"><b>商店街に告知しませんか。</b>お店のお知らせ・イベント・求人など、告知枠への掲載は商店街のお店・町会・ご近所の方なら<b>どなたでも無料</b>です。</div>
+    <a class="btn wide" href="shinsei.html" style="margin-bottom:14px">告知をのせる（無料）</a>
+    <div class="f-btns">
+      <a class="btn line" href="javascript:window.print()">紙で配る（印刷）</a>
+      <a class="btn line" href="shinsei.html">のせたいことがある</a>
+    </div>
+    <small>運営：佐竹商店街振興組合（デモ）　〒110-0016 東京都台東区台東3-28-4<br>
+    本ページは提案用のモックアップです。店名・電話番号・写真の一部は佐竹商店街公式サイト（2026年9月4日時点）より引用（本公開前に掲載許諾を取得します）。回覧板・記事・定休日・告知・コメントの内容はサンプルです。</small>
+  </footer>
+
+</div><!-- /.app -->
+
+<!-- 店ポップアップ -->
+<div class="pop-wrap" id="popWrap" role="dialog" aria-modal="true" aria-labelledby="popName">
+  <div class="pop">
+    <div class="p-head">
+      <img id="popImg" src="" alt="">
+      <div><h3 id="popName"></h3><div class="p-cat" id="popCat"></div></div>
+    </div>
+    <div class="p-desc" id="popDesc"></div>
+    <div class="p-actions">
+      <a class="btn" id="popTel" href="#">☏ 電話する</a>
+      <a class="btn sub" id="popMap" href="#" target="_blank" rel="noopener">地図を見る</a>
+    </div>
+    <a class="btn line" id="popSns" href="#" target="_blank" rel="noopener" style="width:100%;margin-top:10px">SNSを見る（投稿は「今日の3本」に流れます）</a>
+    <button class="btn line p-close" id="popClose" type="button">閉じる</button>
+  </div>
+</div>
+
+<!-- 追従の告知バナー（とじられる） -->
+<div class="ad-banner" id="adBanner">
+  <span class="b-chip">告知</span>
+  <a href="shinsei.html" aria-label="サタケオドリの告知。くわしくは書類をだすページへ"><img src="assets/img/ad_odori.jpg" alt="サタケオドリ 7月18日 佐竹商店街にて開催"></a>
+  <button class="b-close" id="adClose" type="button" aria-label="この告知をとじる">×</button>
+</div>
+
+<!-- 下部タブバー -->
+<nav class="tabbar" aria-label="メニュー">
+  <a href="#top" class="on"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 11 12 4l8 7M6 10v10h12V10"/></svg>ホーム</a>
+  <a href="#calendar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>予定</a>
+  <a href="#mise"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10 5 5h14l1 5M5 10v9h14v-9M9 19v-5h6v5"/></svg>お店</a>
+  <a href="album.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="m4 17 5-4 3 2 4-3 4 3"/></svg>アルバム</a>
+  <a href="#tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a12 12 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>電話</a>
+</nav>
+
+<script src="js/main.js"></script>
+</body>
+</html>
