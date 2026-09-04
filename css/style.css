@@ -69,7 +69,7 @@ a { color: inherit; }
 
 /* ---------------- あいさつカード ---------------- */
 .hello {
-  background: var(--sage); border-radius: var(--r); padding: 20px 22px; margin-bottom: 14px;
+  background: var(--sage); border-radius: var(--r); padding: 22px 24px; margin-bottom: 18px;
 }
 .hello .h-day { font-size: 14.5px; color: var(--green-ink); font-weight: 700; letter-spacing: .04em; }
 .hello h1 { font-family: var(--disp); font-weight: 900; font-size: 26px; color: var(--green-ink); line-height: 1.5; margin: 2px 0 8px; }
@@ -81,12 +81,12 @@ a { color: inherit; }
 .hero-illust img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
 
 /* ---------------- 共通 ---------------- */
-section { margin: 30px 0; }
-.sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; padding: 0 2px; }
+section { margin: 84px 0; }
+.sec-head { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; padding: 0 2px; }
 .sec-head .ico { width: 34px; height: 34px; flex: none; color: var(--green); }
 .sec-head h2 { font-family: var(--disp); font-weight: 900; font-size: 22px; color: var(--green-ink); letter-spacing: .02em; }
 .sec-head .more { margin-left: auto; font-size: 14px; color: var(--sub); text-decoration: none; }
-.sec-lead { font-size: 15px; color: var(--sub); margin: -6px 2px 14px; }
+.sec-lead { font-size: 15px; color: var(--sub); margin: -8px 2px 22px; }
 
 .card { background: var(--panel); border-radius: var(--r); padding: 18px 20px; border: 1px solid var(--edge); box-shadow: 0 2px 8px rgba(70,80,60,.07); }
 .card + .card { margin-top: 12px; }
@@ -271,7 +271,7 @@ section { margin: 30px 0; }
 }
 
 /* ---------------- フッター ---------------- */
-.foot { margin-top: 40px; padding: 24px 4px 10px; border-top: 2px solid var(--line); }
+.foot { margin-top: 90px; padding: 30px 4px 10px; border-top: 2px solid var(--line); }
 .foot .f-free { background: var(--sage); border-radius: var(--r); padding: 16px 18px; font-size: 15px; color: var(--green-ink); margin-bottom: 14px; }
 .foot .f-btns { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 18px; }
 .foot small { font-size: 12px; color: var(--sub); line-height: 1.8; display: block; }
@@ -321,7 +321,7 @@ section { margin: 30px 0; }
 /* ---------------- 告知枠（広告・掲載無料） ---------------- */
 .ad-card {
   background: var(--panel); border: 1.5px solid var(--sage-deep); border-radius: var(--r);
-  padding: 14px 16px 12px; margin: 16px 0; position: relative;
+  padding: 14px 16px 12px; margin: 30px 0 0; position: relative;
   box-shadow: 0 2px 8px rgba(70,80,60,.07);
 }
 .ad-chip {
@@ -378,7 +378,7 @@ section { margin: 30px 0; }
 @media print { .ad-banner { display: none !important; } }
 
 /* ---------------- ヒーロー告知（チラシ面） ---------------- */
-.hero-ads { margin: 4px 0 6px; }
+.hero-ads { margin: 0 0 8px; }
 .ha-scroll { display: flex; gap: 12px; overflow-x: auto; padding: 12px 2px; scroll-snap-type: x mandatory; }
 .ha-scroll::-webkit-scrollbar { display: none; }
 .ha-card {
