@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="robots" content="noindex, nofollow">
+<title>佐竹を歩く｜さたけの回覧板（3Dデモ）</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root { --cream:#FAF6E7; --panel:#fff; --green:#2E6B4F; --ink:#1E4635; --sub:#67725F; --edge:#E6DFC6; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { height:100%; overflow:hidden; overscroll-behavior:none; }
+body { font-family:"Noto Sans JP",sans-serif; background:#141711; color:var(--ink); touch-action:none; }
+#c { position:fixed; inset:0; display:block; }
+/* HUD */
+.hud-top {
+  position:fixed; top:0; left:0; right:0; z-index:10; display:flex; align-items:center; gap:10px;
+  padding:12px 16px; pointer-events:none;
+}
+.hud-top .badge {
+  pointer-events:auto; display:flex; align-items:center; gap:8px;
+  background:rgba(250,246,231,.94); border-radius:999px; padding:6px 16px 6px 8px;
+  box-shadow:0 4px 14px rgba(0,0,0,.25); text-decoration:none;
+}
+.hud-top .badge img { width:32px; height:32px; border-radius:50%; }
+.hud-top .badge b { font-size:14px; color:var(--ink); }
+.hud-top .pos {
+  margin-left:auto; background:rgba(20,23,17,.72); color:#FFE9C4; border-radius:999px;
+  padding:8px 16px; font-size:13px; font-weight:700; font-variant-numeric:tabular-nums;
+}
+.hint {
+  position:fixed; bottom:104px; left:50%; transform:translateX(-50%); z-index:10;
+  background:rgba(20,23,17,.72); color:#F5EFDF; font-size:13.5px; border-radius:999px;
+  padding:9px 20px; transition:opacity .6s; white-space:nowrap;
+}
+.hint.off { opacity:0; }
+/* 歩行ボタン */
+.walkers { position:fixed; bottom:18px; left:50%; transform:translateX(-50%); z-index:10; display:flex; gap:12px; }
+.walkers button {
+  width:76px; height:76px; border-radius:50%; border:none; cursor:pointer;
+  background:rgba(250,246,231,.95); color:var(--ink); font-family:inherit; font-weight:900; font-size:14px;
+  box-shadow:0 6px 18px rgba(0,0,0,.3); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
+  touch-action:none; user-select:none; -webkit-user-select:none;
+}
+.walkers button svg { width:24px; height:24px; }
+.walkers button:active { transform:scale(.94); }
+/* 店ポップアップ */
+.pop-wrap { position:fixed; inset:0; z-index:20; display:none; align-items:flex-end; justify-content:center; background:rgba(20,23,17,.5); }
+.pop-wrap.on { display:flex; }
+.pop {
+  width:100%; max-width:430px; background:var(--cream); border-radius:26px 26px 0 0; padding:20px 22px 30px;
+  animation:rise .25s ease;
+}
+@keyframes rise { from { transform:translateY(40px); opacity:0; } }
+.pop .p-head { display:flex; align-items:center; gap:14px; margin-bottom:10px; }
+.pop .p-head img { width:64px; height:64px; border-radius:50%; background:#E3EAD3; }
+.pop h3 { font-weight:900; font-size:20px; color:var(--ink); line-height:1.4; }
+.pop .p-cat { font-size:13.5px; color:var(--sub); }
+.pop .p-desc { font-size:15px; background:var(--panel); border:1px solid var(--edge); border-radius:14px; padding:12px 16px; margin-bottom:14px; line-height:1.8; }
+.pop .p-actions { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.btn {
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:50px;
+  border-radius:999px; font-weight:900; font-size:15.5px; text-decoration:none; cursor:pointer; border:none;
+  background:var(--green); color:#FFFDF4; font-family:inherit;
+}
+.btn.sub { background:#CFDDB9; color:var(--ink); }
+.btn.line { background:transparent; border:2px solid var(--green); color:var(--green); width:100%; margin-top:10px; }
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+
+<div class="hud-top">
+  <a class="badge" href="../index.html"><img src="../assets/img/owl.png" alt=""><b>佐竹を歩く（3Dデモ）</b></a>
+  <div class="pos" id="pos">0m / 216m</div>
+</div>
+<div class="hint" id="hint">スクロール／ボタン長押しで歩く・お店をタップで案内</div>
+<div class="walkers">
+  <button id="btnBack" type="button" aria-label="うしろに歩く"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5m0 14-5-5m5 5 5-5"/></svg>もどる</button>
+  <button id="btnGo" type="button" aria-label="まえに歩く"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m0-14-5 5m5-5 5 5"/></svg>すすむ</button>
+</div>
+
+<div class="pop-wrap" id="popWrap">
+  <div class="pop">
+    <div class="p-head"><img id="popImg" src="" alt=""><div><h3 id="popName"></h3><div class="p-cat" id="popCat"></div></div></div>
+    <div class="p-desc" id="popDesc"></div>
+    <div class="p-actions">
+      <a class="btn" id="popTel" href="#">☏ 電話する</a>
+      <a class="btn sub" id="popMap" href="#" target="_blank" rel="noopener">地図を見る</a>
+    </div>
+    <button class="btn line" id="popClose" type="button">閉じる</button>
+  </div>
+</div>
+
+<script src="_stores.js"></script>
+<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }</script>
+<script type="module">
+import * as THREE from 'three';
+
+/* ---------- 基本 ---------- */
+const canvas = document.getElementById('c');
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x1a1e17);
+scene.fog = new THREE.Fog(0x1a1e17, 26, 90);
+const camera = new THREE.PerspectiveCamera(62, 1, .1, 200);
+camera.position.set(0, 1.6, 6);
+
+/* ---------- 寸法 ---------- */
+const UNIT = 8;
+const PER_SIDE = Math.ceil(STORES.length / 2);
+const LEN = PER_SIDE * UNIT;
+const HALF_W = 5.2;
+const CATC = { taberu: '#C8452C', kau: '#27506E', kurashi: '#22594A' };
+
+/* ---------- 光 ---------- */
+scene.add(new THREE.AmbientLight(0xfff2dc, .6));
+const dir = new THREE.DirectionalLight(0xffe9c4, .5);
+dir.position.set(3, 10, -4); scene.add(dir);
+
+/* ---------- 床 ---------- */
+const floorTex = (() => {
+  const cv = document.createElement('canvas'); cv.width = cv.height = 256;
+  const g = cv.getContext('2d');
+  g.fillStyle = '#8f887a'; g.fillRect(0, 0, 256, 256);
+  g.strokeStyle = '#7a7264'; g.lineWidth = 3;
+  for (let i = 0; i <= 4; i++) {
+    g.beginPath(); g.moveTo(i * 64, 0); g.lineTo(i * 64, 256); g.stroke();
+    g.beginPath(); g.moveTo(0, i * 64); g.lineTo(256, i * 64); g.stroke();
+  }
+  const t = new THREE.CanvasTexture(cv); t.wrapS = t.wrapT = THREE.RepeatWrapping;
+  t.repeat.set(3, (LEN + 40) / 3.5); return t;
+})();
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(HALF_W * 2, LEN + 40), new THREE.MeshLambertMaterial({ map: floorTex }));
+floor.rotation.x = -Math.PI / 2; floor.position.z = -LEN / 2; scene.add(floor);
+
+/* ---------- アーケード屋根 ---------- */
+const roof = new THREE.Mesh(
+  new THREE.CylinderGeometry(HALF_W + .6, HALF_W + .6, LEN + 24, 24, 1, true, Math.PI * .15, Math.PI * .7),
+  new THREE.MeshLambertMaterial({ color: 0x9db8c6, transparent: true, opacity: .15, side: THREE.DoubleSide }));
+roof.rotation.z = Math.PI / 2; roof.rotation.y = Math.PI / 2;
+roof.position.set(0, 4.4, -LEN / 2); scene.add(roof);
+const ribMat = new THREE.MeshLambertMaterial({ color: 0x2E6B4F });
+for (let z = 4; z < LEN + 8; z += 12) {
+  const rib = new THREE.Mesh(new THREE.TorusGeometry(HALF_W + .5, .09, 6, 28, Math.PI), ribMat);
+  rib.position.set(0, 3.4, -z); scene.add(rib);
+}
+
+/* ---------- テクスチャ ---------- */
+const texLoader = new THREE.TextureLoader();
+function signTexture(name, color) {
+  const cv = document.createElement('canvas'); cv.width = 512; cv.height = 128;
+  const g = cv.getContext('2d');
+  g.fillStyle = color; g.fillRect(0, 0, 512, 128);
+  g.fillStyle = '#FFF6EA'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.font = (name.length > 9 ? '900 40px' : '900 52px') + ' "Noto Sans JP", sans-serif';
+  g.fillText(name, 256, 70);
+  return new THREE.CanvasTexture(cv);
+}
+
+/* ---------- 店ユニット ---------- */
+const hitboxes = [];
+const wallMats = [0xEFE5D2, 0xFDF9F0, 0xE3DACb].map(c => new THREE.MeshLambertMaterial({ color: c }));
+const glowMat = new THREE.MeshBasicMaterial({ color: 0xFFE9C4 });
+const awnGeo = new THREE.BoxGeometry(UNIT - 1.6, .12, 1.4);
+const signGeo = new THREE.PlaneGeometry(UNIT - 2.2, 1.05);
+const winGeo = new THREE.PlaneGeometry(UNIT - 3.2, 1.5);
+const bodyGeo = new THREE.BoxGeometry(UNIT - .6, 3.6, 2);
+
+STORES.forEach((st, i) => {
+  const side = i % 2 === 0 ? -1 : 1;               // 左右交互
+  const slot = Math.floor(i / 2);
+  const z = -(slot * UNIT + UNIT / 2 + 4);
+  const x = side * (HALF_W + .95);
+  const grp = new THREE.Group();
+
+  const body = new THREE.Mesh(bodyGeo, wallMats[i % 3]);
+  body.position.y = 1.8; grp.add(body);
+
+  /* グループ回転で両側とも +zローカル＝通り側 */
+  const win = new THREE.Mesh(winGeo, glowMat);
+  win.position.set(0, 1.15, 1.02);
+  grp.add(win);
+
+  const sign = new THREE.Mesh(signGeo, new THREE.MeshBasicMaterial({ map: signTexture(st[0], CATC[st[3]] || '#22594A') }));
+  sign.position.set(0, 2.95, 1.06);
+  grp.add(sign);
+
+  const awn = new THREE.Mesh(awnGeo, new THREE.MeshLambertMaterial({ color: CATC[st[3]] || '#22594A' }));
+  awn.position.set(0, 2.3, 1.7);
+  awn.rotation.x = .28;
+  grp.add(awn);
+
+  grp.position.set(x, 0, z);
+  grp.rotation.y = side === -1 ? Math.PI / 2 : -Math.PI / 2;
+  scene.add(grp);
+
+  const hit = new THREE.Mesh(new THREE.BoxGeometry(2.4, 4.2, UNIT - .5), new THREE.MeshBasicMaterial({ visible: false }));
+  hit.position.set(side * (HALF_W + .8), 2, z);
+  hit.userData.store = st;
+  scene.add(hit); hitboxes.push(hit);
+});
+
+/* ---------- ふくろう提灯 ---------- */
+texLoader.load('../assets/img/owl.png', (owlTex) => {
+  const mat = new THREE.SpriteMaterial({ map: owlTex });
+  for (let z = 8; z < LEN; z += 10) {
+    [-HALF_W + 1.2, HALF_W - 1.2].forEach(x => {
+      const s = new THREE.Sprite(mat.clone());
+      s.scale.set(.9, .9, 1); s.position.set(x, 3.6, -z - (x > 0 ? 5 : 0));
+      scene.add(s);
+    });
+  }
+});
+
+/* ---------- 横断幕（実物ポスター） ---------- */
+['../assets/img/ad_flea.jpg', '../assets/img/ad_banner_contest.jpg', '../assets/img/ad_odori.jpg'].forEach((src, i) => {
+  texLoader.load(src, (t) => {
+    const ar = t.image.width / t.image.height;
+    const h = 1.7, w = Math.min(h * ar, 6);
+    const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ map: t, side: THREE.DoubleSide }));
+    m.position.set(0, 3.1, -(24 + i * 56));
+    scene.add(m);
+  });
+});
+
+/* ---------- 入口ゲート ---------- */
+const gate = new THREE.Mesh(new THREE.PlaneGeometry(5.5, 1.1), new THREE.MeshBasicMaterial({ map: signTexture('佐竹商店街', '#1E4635') }));
+gate.position.set(0, 4.1, 1.8); scene.add(gate);
+const gateB = new THREE.Mesh(new THREE.PlaneGeometry(7, 1.4), new THREE.MeshBasicMaterial({ map: signTexture('またどうぞ', '#1E4635') }));
+gateB.rotation.y = Math.PI; gateB.position.set(0, 3.6, -LEN - 6); scene.add(gateB);
+
+/* ---------- 歩行 ---------- */
+let targetZ = 6, curZ = 6, walking = 0;
+const MINZ = -(LEN + 2), MAXZ = 6;
+function clampZ(v) { return Math.max(MINZ, Math.min(MAXZ, v)); }
+addEventListener('wheel', e => { targetZ = clampZ(targetZ - e.deltaY * .02); hideHint(); }, { passive: true });
+let ty = null;
+addEventListener('touchstart', e => { if (e.target.closest('.walkers,.pop,.hud-top')) return; ty = e.touches[0].clientY; });
+addEventListener('touchmove', e => {
+  if (ty === null) return;
+  const dy = e.touches[0].clientY - ty; ty = e.touches[0].clientY;
+  targetZ = clampZ(targetZ + dy * .045); hideHint();
+}, { passive: true });
+addEventListener('touchend', () => { ty = null; });
+function bindWalk(id, dv) {
+  const b = document.getElementById(id);
+  const on = e => { e.preventDefault(); walking = dv; hideHint(); };
+  const off = () => { walking = 0; };
+  b.addEventListener('pointerdown', on);
+  addEventListener('pointerup', off); b.addEventListener('pointerleave', off);
+}
+bindWalk('btnGo', -1); bindWalk('btnBack', 1);
+let hintHidden = false;
+function hideHint() { if (!hintHidden) { hintHidden = true; document.getElementById('hint').classList.add('off'); } }
+setTimeout(hideHint, 6000);
+
+/* ---------- 店タップ ---------- */
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2();
+let downAt = null;
+canvas.addEventListener('pointerdown', e => { downAt = [e.clientX, e.clientY, Date.now()]; });
+canvas.addEventListener('pointerup', e => {
+  if (!downAt) return;
+  const moved = Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]);
+  const dt = Date.now() - downAt[2]; downAt = null;
+  if (moved > 12 || dt > 500) return;
+  ptr.x = (e.clientX / innerWidth) * 2 - 1;
+  ptr.y = -(e.clientY / innerHeight) * 2 + 1;
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(hitboxes)[0];
+  if (hit) openPop(hit.object.userData.store);
+});
+
+/* ---------- ポップアップ ---------- */
+const wrap = document.getElementById('popWrap');
+function fmtTel(t) { return t.replace(/^(\d{2,4})(\d{4})(\d{4})$/, '$1-$2-$3'); }
+function openPop(m) {
+  document.getElementById('popImg').src = '../assets/img/face' + m[5] + '.png';
+  document.getElementById('popName').textContent = m[0];
+  document.getElementById('popCat').textContent = m[2] + '　／　定休日 ' + m[6] + '（サンプル）';
+  document.getElementById('popDesc').textContent = m[7] || m[2] + 'のお店です。くわしくはお電話でどうぞ。';
+  const tel = document.getElementById('popTel');
+  if (m[4]) { tel.style.display = ''; tel.href = 'tel:' + m[4]; tel.textContent = '☏ ' + fmtTel(m[4]); }
+  else tel.style.display = 'none';
+  document.getElementById('popMap').href = 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(m[0] + ' 佐竹商店街 台東区');
+  wrap.classList.add('on');
+}
+document.getElementById('popClose').addEventListener('click', () => wrap.classList.remove('on'));
+wrap.addEventListener('click', e => { if (e.target === wrap) wrap.classList.remove('on'); });
+
+/* ---------- ループ ---------- */
+const posEl = document.getElementById('pos');
+let bob = 0;
+function resize() {
+  renderer.setSize(innerWidth, innerHeight, false);
+  camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+renderer.setAnimationLoop((t) => {
+  if (walking) targetZ = clampZ(targetZ + walking * .1);
+  curZ += (targetZ - curZ) * .06;
+  bob = Math.abs(targetZ - curZ) > .05 ? Math.sin(t * .012) * .05 : bob * .95;
+  camera.position.set(Math.sin(t * .0004) * .12, 1.6 + bob, curZ);
+  camera.lookAt(0, 1.7, curZ - 10);
+  const m = Math.round(Math.max(0, 6 - curZ) / (6 - MINZ) * (LEN + 8));
+  posEl.textContent = m + 'm / ' + (LEN + 8) + 'm';
+  renderer.render(scene, camera);
+});
+</script>
+</body>
+</html>
