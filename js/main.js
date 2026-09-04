@@ -37,7 +37,7 @@
     (now.getMonth() + 1) + '月' + now.getDate() + '日（' + wd[now.getDay()] + '）';
   var h = now.getHours();
   document.getElementById('helloGreet').textContent =
-    h < 5 ? 'こんばんは。' : h < 10 ? 'おはようございます。' : h < 18 ? 'こんにちは。' : 'こんばんは。';
+    h < 5 ? 'こんばんは。' : h < 10 ? 'おはようございます。' : h < 18 ? '午後に雨が上がるよ。' : 'こんばんは。';
 })();
 
 /* ---------- 3. しめきりカウントダウン ---------- */
@@ -260,4 +260,92 @@ var MISE = [
     });
   }, { rootMargin: '0px 0px -6% 0px' });
   document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+})();
+
+/* ---------- 8. ふくろうAIガイド（画面のみのデモ） ---------- */
+(function () {
+  var wrap = document.getElementById('chatWrap');
+  var fab = document.getElementById('fabOwl');
+  if (!wrap || !fab) return;
+  var log = document.getElementById('chatLog');
+  var chipsBox = document.getElementById('chatChips');
+  var form = document.getElementById('chatForm');
+  var input = document.getElementById('chatInput');
+  var CHIPS = ['今日の予定は？', '近い締切は？', 'お店を探したい', '告知をのせたい'];
+
+  function say(text, me) {
+    var div = document.createElement('div');
+    div.className = 'msg' + (me ? ' me' : '');
+    div.innerHTML = (me ? '' : '<img src="assets/img/owl.png" alt="">') +
+      '<div class="bubble">' + text + '</div>';
+    log.appendChild(div);
+    log.scrollTop = log.scrollHeight;
+  }
+  function nearestDeadline() {
+    var today = new Date(); today.setHours(0, 0, 0, 0);
+    var best = null;
+    document.querySelectorAll('.dl[data-due]').forEach(function (el) {
+      var due = new Date(el.getAttribute('data-due') + 'T00:00:00');
+      var days = Math.round((due - today) / 86400000);
+      if (days >= 0 && (!best || days < best.days)) best = { days: days, name: el.querySelector('h3').textContent };
+    });
+    return best;
+  }
+  function reply(q) {
+    setTimeout(function () {
+      if (/予定|カレンダー|こよみ|工事|祭/.test(q)) {
+        say('今週は 9月8日（月）に北側入口で水道管の工事、12日（土）19時にふくろう祭りの実行委員会があります。<a href="#calendar" data-close>予定の欄を見る →</a>');
+      } else if (/締切|しめきり|助成|申請|期限/.test(q)) {
+        var b = nearestDeadline();
+        say(b ? 'いちばん近いのは「' + b.name + '」、あと' + b.days + '日です。<a href="shinsei.html">書類を出す →</a>' : 'いま近い締切はありません。');
+      } else if (/告知|広告|チラシ|のせ|載せ/.test(q)) {
+        say('告知の掲載は、商店街のお店・町会なら<b>無料</b>です。<a href="shinsei.html">「書類を出す」からどうぞ →</a>');
+      } else if (/店|買|食|探/.test(q)) {
+        say('お店の名前や、売っているものを書いてください。例：「ふくや」「コーヒー」');
+      } else {
+        var hit = (typeof MISE !== 'undefined') && MISE.filter(function (m) {
+          return q && (m[0].indexOf(q) !== -1 || m[1].indexOf(q) !== -1 || m[2].indexOf(q) !== -1);
+        })[0];
+        if (hit) {
+          say('「' + hit[0] + '」（' + hit[2] + '）ですね。定休日は' + hit[6] + '（サンプル）。' +
+            (hit[4] ? '<a href="tel:' + hit[4] + '">☏ 電話する →</a>' : '') +
+            ' <a href="#mise" data-close>お店の欄で見る →</a>');
+        } else {
+          say('ごめんなさい、うまく分かりませんでした。下のボタンから選ぶか、別の言葉で聞いてください。');
+        }
+      }
+    }, 450);
+  }
+  CHIPS.forEach(function (c) {
+    var b = document.createElement('button');
+    b.type = 'button'; b.textContent = c;
+    b.addEventListener('click', function () { say(c, true); reply(c); });
+    chipsBox.appendChild(b);
+  });
+  var greeted = false;
+  function openChat() {
+    wrap.classList.add('on');
+    if (!greeted) {
+      greeted = true;
+      setTimeout(function () {
+        say('こんにちは、案内係のふくろうです。この回覧板のことなら、なんでも聞いてください。（画面デモ・実際のAIにはまだつながっていません）');
+      }, 250);
+    }
+    input.focus();
+  }
+  function closeChat() { wrap.classList.remove('on'); fab.focus(); }
+  fab.addEventListener('click', openChat);
+  document.getElementById('chatClose').addEventListener('click', closeChat);
+  wrap.addEventListener('click', function (e) {
+    if (e.target === wrap) closeChat();
+    if (e.target.hasAttribute && e.target.hasAttribute('data-close')) closeChat();
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && wrap.classList.contains('on')) closeChat(); });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var v = input.value.trim();
+    if (!v) return;
+    say(v, true); input.value = '';
+    reply(v);
+  });
 })();

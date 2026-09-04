@@ -110,6 +110,13 @@
         <p class="d-date">10月15日（木）まで</p>
         <a class="btn" href="shinsei.html">書類を出す</a>
       </div>
+      <div class="dl ad" >
+        <span class="d-tag">告知</span>
+        <div class="d-num"><span>9/18</span></div>
+        <h3>GENKI NEXT｜健康体操の無料体験会</h3>
+        <p class="d-date">9月18日（木）14時〜 予約不要（サンプル告知）</p>
+        <a class="btn" href="shinsei.html">告知をのせる</a>
+      </div>
     </div>
     <div class="ad-card reveal">
       <span class="ad-chip">告知</span>
@@ -272,6 +279,28 @@
     </div>
     <a class="btn line" id="popSns" href="#" target="_blank" rel="noopener" style="width:100%;margin-top:10px">SNSを見る（投稿は「今日の3本」に流れます）</a>
     <button class="btn line p-close" id="popClose" type="button">閉じる</button>
+  </div>
+</div>
+
+<!-- ふくろうAIガイド -->
+<button class="fab" id="fabOwl" type="button" aria-label="ふくろうに質問する">
+  <img src="assets/img/owl.png" alt="">
+  <span>案内</span>
+</button>
+
+<div class="chat-wrap" id="chatWrap" role="dialog" aria-modal="true" aria-label="ふくろうの案内チャット">
+  <div class="chat">
+    <div class="ch-head">
+      <img src="assets/img/owl.png" alt="">
+      <div><b>さたけのふくろう</b><small>この回覧板の案内係（デモ）</small></div>
+      <button class="ch-close" id="chatClose" type="button" aria-label="チャットを閉じる">×</button>
+    </div>
+    <div class="ch-log" id="chatLog" aria-live="polite"></div>
+    <div class="ch-chips" id="chatChips"></div>
+    <form class="ch-form" id="chatForm">
+      <input type="text" id="chatInput" placeholder="聞きたいことを書いてください" aria-label="聞きたいことを書いてください">
+      <button class="btn" type="submit">送る</button>
+    </form>
   </div>
 </div>
 
