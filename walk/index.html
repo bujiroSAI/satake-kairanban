@@ -92,6 +92,12 @@ body { font-family:"Noto Sans JP",sans-serif; background:#141711; color:var(--in
   </div>
 </div>
 
+<script>
+window.onerror = function (msg, src, line) {
+  var h = document.getElementById('hint');
+  if (h) { h.classList.remove('off'); h.style.whiteSpace = 'normal'; h.textContent = 'エラー: ' + msg + ' (' + line + '行)'; }
+};
+</script>
 <script src="_stores.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
